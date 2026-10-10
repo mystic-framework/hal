@@ -1,0 +1,27 @@
+name: "CI/CD"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  cpp-compatibility:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        compiler: [gcc, clang]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: C++ Compatibility
+        uses: mystic-framework/github-actions/cpp-compatibility@v1
+        with:
+          compiler: ${{ matrix.compiler }}
+          build-type: Release

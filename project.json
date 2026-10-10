@@ -1,0 +1,9 @@
+{
+  "name": "MysticHal",
+  "version": "1.0.0",
+  "description": "A lightweight, high-performance, and cross-platform C++ Hardware Abstraction Layer (HAL) library for Mystic Framework.",
+  "homepage": "https://mystic-framework.github.io/docs/modules/hal",
+  "languages": ["CXX"],
+  "cxx_standard": 23,
+  "license": "Apache-2.0"
+}

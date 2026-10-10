@@ -1,0 +1,337 @@
+{
+  "version": 9,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 30,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "CMake Preset - Default",
+      "description": "Default configuration.",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "MYSTICHAL_BUILD_TYPE": "Release",
+        "MYSTICHAL_ENABLE_BENCHMARKS": "OFF",
+        "MYSTICHAL_ENABLE_COVERAGE": "OFF",
+        "MYSTICHAL_ENABLE_DOCS": "OFF",
+        "MYSTICHAL_ENABLE_EXAMPLES": "OFF",
+        "MYSTICHAL_ENABLE_LTO": "OFF",
+        "MYSTICHAL_ENABLE_LINT": "OFF",
+        "MYSTICHAL_ENABLE_NARCH": "OFF",
+        "MYSTICHAL_ENABLE_PROFILER": "OFF",
+        "MYSTICHAL_ENABLE_SANITIZERS": "OFF",
+        "MYSTICHAL_ENABLE_TESTING": "OFF",
+        "MYSTICHAL_ENABLE_WARNINGS": "OFF"
+      }
+    },
+    {
+      "name": "debug",
+      "inherits": "default",
+      "displayName": "CMake Preset - Debug",
+      "description": "Standard debug configuration.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "MYSTICHAL_BUILD_TYPE": "Debug",
+        "MYSTICHAL_ENABLE_EXAMPLES": "ON",
+        "MYSTICHAL_ENABLE_TESTING": "ON",
+        "MYSTICHAL_ENABLE_WARNINGS": "ON"
+      }
+    },
+    {
+      "name": "release",
+      "inherits": "default",
+      "displayName": "CMake Preset - Release",
+      "description": "Standard release configuration.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "MYSTICHAL_BUILD_TYPE": "Release",
+        "MYSTICHAL_ENABLE_LTO": "ON"
+      }
+    },
+    {
+      "name": "release-max-performance",
+      "inherits": "release",
+      "displayName": "CMake Preset - Release MAX PERFORMANCE",
+      "description": "Release configuration for MAX performance. HELL YEAH!",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "MYSTICHAL_BUILD_TYPE": "Release",
+        "MYSTICHAL_ENABLE_LTO": "ON",
+        "MYSTICHAL_ENABLE_NARCH": "ON"
+      }
+    },
+    {
+      "name": "asan",
+      "inherits": "debug",
+      "displayName": "CMake Preset - AddressSanitizer",
+      "description": "Debug configuration with AddressSanitizer enabled.",
+      "cacheVariables": {
+        "MYSTICHAL_ENABLE_SANITIZERS": "ON",
+        "MYSTICHAL_SANITIZER_TYPE": "Address"
+      }
+    },
+    {
+      "name": "ubsan",
+      "inherits": "debug",
+      "displayName": "CMake Preset - UndefinedBehaviorSanitizer",
+      "description": "Debug configuration with UndefinedBehaviorSanitizer enabled.",
+      "cacheVariables": {
+        "MYSTICHAL_ENABLE_SANITIZERS": "ON",
+        "MYSTICHAL_SANITIZER_TYPE": "Undefined"
+      }
+    },
+    {
+      "name": "tsan",
+      "inherits": "debug",
+      "displayName": "CMake Preset - ThreadSanitizer",
+      "description": "Debug configuration with ThreadSanitizer enabled.",
+      "cacheVariables": {
+        "MYSTICHAL_ENABLE_SANITIZERS": "ON",
+        "MYSTICHAL_SANITIZER_TYPE": "Thread"
+      }
+    },
+    {
+      "name": "msan",
+      "inherits": "debug",
+      "displayName": "CMake Preset - MemorySanitizer",
+      "description": "Debug configuration with MemorySanitizer enabled (requires Clang).",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "MYSTICHAL_ENABLE_SANITIZERS": "ON",
+        "MYSTICHAL_SANITIZER_TYPE": "Memory"
+      }
+    },
+    {
+      "name": "coverage",
+      "inherits": "debug",
+      "displayName": "CMake Preset - Coverage",
+      "description": "Debug configuration with code coverage enabled.",
+      "cacheVariables": {
+        "MYSTICHAL_ENABLE_COVERAGE": "ON"
+      }
+    },
+    {
+      "name": "profile",
+      "inherits": "default",
+      "displayName": "CMake Preset - Profile",
+      "description": "Optimized configuration with debug info and profiling enabled.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "MYSTICHAL_BUILD_TYPE": "RelWithDebInfo",
+        "MYSTICHAL_ENABLE_PROFILER": "ON",
+        "MYSTICHAL_ENABLE_TESTING": "ON"
+      }
+    },
+    {
+      "name": "lint",
+      "inherits": "debug",
+      "displayName": "CMake Preset - Lint",
+      "description": "Debug configuration with static code analysis enabled.",
+      "cacheVariables": {
+        "MYSTICHAL_ENABLE_LINT": "ON"
+      }
+    },
+    {
+      "name": "benchmark",
+      "inherits": "release-max-performance",
+      "displayName": "CMake Preset - Benchmark",
+      "description": "Max performance release configuration with benchmarks enabled.",
+      "cacheVariables": {
+        "MYSTICHAL_ENABLE_BENCHMARKS": "ON"
+      }
+    },
+    {
+      "name": "min-size",
+      "inherits": "default",
+      "displayName": "CMake Preset - Minimum Size",
+      "description": "Release configuration optimized for minimum binary size.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "MinSizeRel",
+        "MYSTICHAL_BUILD_TYPE": "MinSizeRel",
+        "MYSTICHAL_ENABLE_LTO": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "displayName": "CMake Build Preset - Default",
+      "description": "Build default configuration.",
+      "configurePreset": "default",
+      "jobs": 0
+    },
+    {
+      "name": "debug",
+      "displayName": "CMake Build Preset - Debug",
+      "description": "Build standard debug configuration.",
+      "configurePreset": "debug",
+      "jobs": 0
+    },
+    {
+      "name": "release",
+      "displayName": "CMake Build Preset - Release",
+      "description": "Build standard release configuration.",
+      "configurePreset": "release",
+      "jobs": 0
+    },
+    {
+      "name": "release-max-performance",
+      "displayName": "CMake Build Preset - Release MAX PERFORMANCE",
+      "description": "Build release configuration for MAX performance. HELL YEAH!",
+      "configurePreset": "release-max-performance",
+      "jobs": 0
+    },
+    {
+      "name": "asan",
+      "displayName": "CMake Build Preset - AddressSanitizer",
+      "description": "Build debug configuration with AddressSanitizer enabled.",
+      "configurePreset": "asan",
+      "jobs": 0
+    },
+    {
+      "name": "ubsan",
+      "displayName": "CMake Build Preset - UndefinedBehaviorSanitizer",
+      "description": "Build debug configuration with UndefinedBehaviorSanitizer enabled.",
+      "configurePreset": "ubsan",
+      "jobs": 0
+    },
+    {
+      "name": "tsan",
+      "displayName": "CMake Build Preset - ThreadSanitizer",
+      "description": "Build debug configuration with ThreadSanitizer enabled.",
+      "configurePreset": "tsan",
+      "jobs": 0
+    },
+    {
+      "name": "msan",
+      "displayName": "CMake Build Preset - MemorySanitizer",
+      "description": "Build debug configuration with MemorySanitizer enabled (requires Clang).",
+      "configurePreset": "msan",
+      "jobs": 0
+    },
+    {
+      "name": "coverage",
+      "displayName": "CMake Build Preset - Coverage",
+      "description": "Build debug configuration with code coverage enabled.",
+      "configurePreset": "coverage",
+      "jobs": 0
+    },
+    {
+      "name": "profile",
+      "displayName": "CMake Build Preset - Profile",
+      "description": "Build optimized configuration with debug info and profiling enabled.",
+      "configurePreset": "profile",
+      "jobs": 0
+    },
+    {
+      "name": "lint",
+      "displayName": "CMake Build Preset - Lint",
+      "description": "Build debug configuration with static code analysis enabled.",
+      "configurePreset": "lint",
+      "jobs": 0
+    },
+    {
+      "name": "benchmark",
+      "displayName": "CMake Build Preset - Benchmark",
+      "description": "Build max performance release configuration with benchmarks enabled.",
+      "configurePreset": "benchmark",
+      "jobs": 0
+    },
+    {
+      "name": "min-size",
+      "displayName": "CMake Build Preset - Minimum Size",
+      "description": "Build release configuration optimized for minimum binary size.",
+      "configurePreset": "min-size",
+      "jobs": 0
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "debug",
+      "displayName": "CMake Test Preset - Debug",
+      "description": "Run tests for the debug configuration.",
+      "configurePreset": "debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "asan",
+      "displayName": "CMake Test Preset - AddressSanitizer",
+      "description": "Run tests with AddressSanitizer enabled.",
+      "configurePreset": "asan",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "ubsan",
+      "displayName": "CMake Test Preset - UndefinedBehaviorSanitizer",
+      "description": "Run tests with UndefinedBehaviorSanitizer enabled.",
+      "configurePreset": "ubsan",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "tsan",
+      "displayName": "CMake Test Preset - ThreadSanitizer",
+      "description": "Run tests with ThreadSanitizer enabled.",
+      "configurePreset": "tsan",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "msan",
+      "displayName": "CMake Test Preset - MemorySanitizer",
+      "description": "Run tests with MemorySanitizer enabled (requires Clang).",
+      "configurePreset": "msan",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "coverage",
+      "displayName": "CMake Test Preset - Coverage",
+      "description": "Run tests with code coverage enabled.",
+      "configurePreset": "coverage",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "profile",
+      "displayName": "CMake Test Preset - Profile",
+      "description": "Run tests for the profiling configuration.",
+      "configurePreset": "profile",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "lint",
+      "displayName": "CMake Test Preset - Lint",
+      "description": "Run tests for the lint configuration.",
+      "configurePreset": "lint",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}

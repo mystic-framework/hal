@@ -1,0 +1,85 @@
+--- Build Outputs & Objects ---
+build/
+bin/
+obj/
+*.o
+*.obj
+*.lo
+*.la
+*.slo
+*.loT
+
+--- Executables & Libraries ---
+*.out
+*.app
+*.exe
+*.dll
+*.so
+*.dylib
+*.lib
+*.a
+
+--- CMake Artifacts ---
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+DartConfiguration.tcl
+Makefile
+cmake_install.cmake
+install_manifest.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+_deps/
+compile_commands.json
+
+--- Visual Studio ---
+.vs/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+*.suo
+*.user
+*.userosscache
+*.aps
+ipch/
+
+--- Xcode ---
+*.xcodeproj/
+*.xccheckout
+*.xcworkspace/
+xcuserdata/
+derivedData/
+
+--- Code::Blocks & Eclipse ---
+*.cbp
+*.depend
+*.layout
+.metadata/
+.settings/
+.project
+.cproject
+
+--- Debugging & Profiling ---
+*.gch
+*.pch
+*.ilk
+*.pdb
+*.idb
+*.gcno
+*.gcda
+*.gcov
+gmon.out
+valgrind.out
+
+--- OS Specific ---
+.cache
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/

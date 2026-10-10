@@ -1,0 +1,62 @@
+# Mystic Framework Clang-Format Configuration
+
+# --- Base ---
+Language: Cpp
+BasedOnStyle: Google
+Standard: Latest
+
+# --- Whitespace and indentation ---
+ColumnLimit: 100
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+ContinuationIndentWidth: 4
+AccessModifierOffset: -1
+IndentCaseLabels: true
+NamespaceIndentation: None
+MaxEmptyLinesToKeep: 1
+KeepEmptyLinesAtTheStartOfBlocks: false
+EmptyLineBeforeAccessModifier: LogicalBlock
+
+# --- Braces ---
+BreakBeforeBraces: Attach
+AllowShortBlocksOnASingleLine: Never
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortLambdasOnASingleLine: All
+LambdaBodyIndentation: Signature
+
+# --- Pointers, references, braced lists ---
+PointerAlignment: Left
+DerivePointerAlignment: false
+Cpp11BracedListStyle: true
+SpaceBeforeCpp11BracedList: false
+
+# --- Wrapping ---
+AlignAfterOpenBracket: Align
+BinPackParameters: false
+BinPackArguments: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AlignOperands: Align
+BreakBeforeBinaryOperators: None
+AlwaysBreakTemplateDeclarations: Yes
+
+# --- Constructor initializer lists ---
+BreakConstructorInitializers: BeforeColon
+ConstructorInitializerIndentWidth: 4
+PackConstructorInitializers: NextLine
+
+# --- Preprocessor ---
+IndentPPDirectives: AfterHash
+PPIndentWidth: 2
+
+# --- Includes ---
+SortIncludes: Never
+IncludeBlocks: Preserve
+
+# --- Comments and namespaces ---
+FixNamespaceComments: true
+SpacesBeforeTrailingComments: 2
+ReflowComments: true
