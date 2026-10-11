@@ -18,6 +18,10 @@ include(MysticSetupOptions)
 mystic_setup_options()
 mystic_setup_third_party_options("Catch2")
 
+# Since HAL is quite platform dependent, we will provide an option to specify that it's
+# being built locally, this disables some tests which are only runnable in CI/CD.
+option(MYSTICHAL_LOCAL_BUILD "HAL is being built locally." OFF)
+
 # Include Third Party
 include(MysticIncludeThirdParty)
 mystic_include_third_party()
@@ -61,8 +65,10 @@ target_include_directories(mystic_hal
 include(MysticCompileOptions)
 mystic_compile_options(mystic_hal)
 
-# Export Everything on Windows (remove it later)
-set_target_properties(mystic_hal PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+# Add MYSTIC_HAL_LOCAL_BUILD definition to the target
+if(MYSTICHAL_LOCAL_BUILD)
+  target_compile_definitions(mystic_hal PRIVATE MYSTIC_HAL_LOCAL_BUILD)
+endif()
 
 # Testing
 include(MysticTest)

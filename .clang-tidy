@@ -48,7 +48,9 @@ Checks: >
   -portability-simd-intrinsics,
   readability-*,
   -readability-implicit-bool-conversion,
-  -readability-magic-numbers
+  -readability-magic-numbers,
+  -readability-else-after-return,
+  -readability-function-cognitive-complexity
 
 # Handle warnings as errors
 WarningsAsErrors: '*'
@@ -73,9 +75,9 @@ CheckOptions:
 
   # --- Short names that are normal in engine/math code ---
   - key: readability-identifier-length.IgnoredVariableNames
-    value: '^(x|y|z|w|u|v|r|g|b|a|i|j|k|n|t|dt|id)$'
+    value: '^(x|y|z|w|u|v|r|g|b|a|i|j|k|n|t|dt|id|os|fd)$'
   - key: readability-identifier-length.IgnoredParameterNames
-    value: '^(x|y|z|w|u|v|r|g|b|a|i|j|k|n|t|dt|id)$'
+    value: '^(x|y|z|w|u|v|r|g|b|a|i|j|k|n|t|dt|id|os|fd)$'
 
   # --- Naming ---
   - key: readability-identifier-naming.IgnoreMainLikeFunctions
