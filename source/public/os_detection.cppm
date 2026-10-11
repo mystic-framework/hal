@@ -274,7 +274,7 @@ export inline LinuxVersion GetLinuxVersion() noexcept {
   buffer[bytes_read] = '\0';
 
   // Helper lambda to go to next line
-  auto next_line = [](char* str) -> char* {
+  auto next_line = [](char*& str) -> char* {
     if (str == nullptr || *str == '\0') {
       return nullptr;
     }
@@ -311,7 +311,8 @@ export inline LinuxVersion GetLinuxVersion() noexcept {
     return *prefix == '\0';
   };
 
-  while (char* line = next_line(buffer)) {
+  char* line = buffer;
+  while (next_line(line)) {
     if (starts_with(line, "ID=")) {
       char* val = line + 3;  // Skip "ID="
 
