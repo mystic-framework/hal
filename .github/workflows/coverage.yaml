@@ -24,4 +24,4 @@ jobs:
           language: cpp
           sonar-token: ${{ secrets.SONAR_TOKEN }}
           cpp-coverage-tool: llvm-cov
-          cpp-coverage-option: MYSTICVERSION_ENABLE_COVERAGE
+          cpp-coverage-option: MYSTICHAL_ENABLE_COVERAGE
