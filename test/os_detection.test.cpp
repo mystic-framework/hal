@@ -32,14 +32,17 @@ import mystic.hal.os_detection;
 // Since these tests rely on a specific OS, we'll skip on local builds.
 #ifndef MYSTIC_HAL_LOCAL_BUILD
 
-// Linux Test Suites
-#  if MYSTIC_OS == MYSTIC_OS_LINUX
 TEST_CASE("Compile-Time OS Detection", "[hal][os][compile_time]") {
   SECTION("Detect OS at Compile Time") {
     constexpr auto kOS = mystic::hal::compile_time::GetOperatingSystem();
 
+#  if MYSTIC_OS == MYSTIC_OS_LINUX
     REQUIRE(kOS == mystic::hal::OperatingSystem::kLinux);
     REQUIRE(std::string(mystic::hal::compile_time::GetOperatingSystemAsString()) == "Linux");
+#  else
+    REQUIRE(kOS == mystic::hal::OperatingSystem::kUnknown);
+    REQUIRE(std::string(mystic::hal::compile_time::GetOperatingSystemAsString()) == "Unknown");
+#  endif
   }
 }
 
@@ -48,22 +51,31 @@ TEST_CASE("Runtime OS Detection", "[hal][os][runtime]") {
     auto os = mystic::hal::runtime::GetOperatingSystem();
     auto linux_version = mystic::hal::runtime::GetLinuxVersion();
 
+#  if MYSTIC_OS == MYSTIC_OS_LINUX
     REQUIRE(os == mystic::hal::OperatingSystem::kLinux);
     REQUIRE(std::string(mystic::hal::compile_time::GetOperatingSystemAsString()) == "Linux");
     REQUIRE(linux_version == mystic::hal::LinuxVersion::kUbuntu);
     REQUIRE(std::string(mystic::hal::runtime::GetLinuxVersionAsString()) == "Ubuntu");
+#  else
+    REQUIRE(os == mystic::hal::OperatingSystem::kUnknown);
+    REQUIRE(std::string(mystic::hal::compile_time::GetOperatingSystemAsString()) == "Unknown");
+    REQUIRE(linux_version == mystic::hal::LinuxVersion::kUnknown);
+    REQUIRE(std::string(mystic::hal::runtime::GetLinuxVersionAsString()) == "Unknown");
+#  endif
   }
 }
-#  endif  // MYSTIC_OS == MYSTIC_OS_LINUX
 
-// Windows Test Suites
-#  if MYSTIC_OS == MYSTIC_OS_WINDOWS
 TEST_CASE("Compile-Time OS Detection", "[hal][os][compile_time]") {
   SECTION("Detect OS at Compile Time") {
     constexpr auto kOS = mystic::hal::compile_time::GetOperatingSystem();
 
+#  if MYSTIC_OS == MYSTIC_OS_WINDOWS
     REQUIRE(kOS == mystic::hal::OperatingSystem::kWindows);
     REQUIRE(std::string(mystic::hal::compile_time::GetOperatingSystemAsString()) == "Windows");
+#  else
+    REQUIRE(kOS == mystic::hal::OperatingSystem::kUnknown);
+    REQUIRE(std::string(mystic::hal::compile_time::GetOperatingSystemAsString()) == "Unknown");
+#  endif
   }
 }
 
@@ -72,12 +84,18 @@ TEST_CASE("Runtime OS Detection", "[hal][os][runtime]") {
     auto os = mystic::hal::runtime::GetOperatingSystem();
     auto windows_version = mystic::hal::runtime::GetWindowsVersion();
 
+#  if MYSTIC_OS == MYSTIC_OS_WINDOWS
     REQUIRE(os == mystic::hal::OperatingSystem::kWindows);
     REQUIRE(std::string(mystic::hal::compile_time::GetOperatingSystemAsString()) == "Windows");
     REQUIRE(windows_version == mystic::hal::WindowsVersion::kWindowsServer2025);
     REQUIRE(std::string(mystic::hal::runtime::GetWindowsVersionAsString()) ==
             "Windows Server 2025");
+#  else
+    REQUIRE(os == mystic::hal::OperatingSystem::kUnknown);
+    REQUIRE(std::string(mystic::hal::compile_time::GetOperatingSystemAsString()) == "Unknown");
+    REQUIRE(windows_version == mystic::hal::WindowsVersion::kUnknown);
+    REQUIRE(std::string(mystic::hal::runtime::GetWindowsVersionAsString()) == "Unknown");
+#  endif
   }
 }
-#  endif  // MYSTIC_OS == MYSTIC_OS_WINDOWS
-#endif    // MYSTIC_HAL_LOCAL_BUILD
+#endif  // MYSTIC_HAL_LOCAL_BUILD

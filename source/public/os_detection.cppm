@@ -163,11 +163,26 @@ export inline WindowsVersion GetWindowsVersion() noexcept {
     return WindowsVersion::kUnknown;
   }
 
+  using RtlGetVersionPtr = LONG(WINAPI*)(PRTL_OSVERSIONINFOW);
   auto RtlGetVersion =
       reinterpret_cast<RtlGetVersionPtr>(::GetProcAddress(h_ntdll, "RtlGetVersion"));
   if (!RtlGetVersion) {
     return WindowsVersion::kUnknown;
   }
+
+  struct RTL_OSVERSIONINFOXW {
+    DWORD dwOSVersionInfoSize;
+    DWORD dwMajorVersion;
+    DWORD dwMinorVersion;
+    DWORD dwBuildNumber;
+    DWORD dwPlatformId;
+    WCHAR szCSDVersion[128];
+    WORD wServicePackMajor;
+    WORD wServicePackMinor;
+    WORD wSuiteMask;
+    BYTE wProductType;
+    BYTE wReserved;
+  };
 
   RTL_OSVERSIONINFOXW osvi{};
   osvi.dwOSVersionInfoSize = sizeof(osvi);
