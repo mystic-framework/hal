@@ -34,8 +34,11 @@ add_library(Mystic::Hal ALIAS mystic_hal)
 file(GLOB_RECURSE MYSTICHAL_PUBLIC_MODULES  CONFIGURE_DEPENDS "source/public/*.cppm")
 file(GLOB_RECURSE MYSTICHAL_PUBLIC_HEADERS  CONFIGURE_DEPENDS "source/public/*.hpp")
 file(GLOB_RECURSE MYSTICHAL_PRIVATE_MODULES CONFIGURE_DEPENDS "source/private/*.cppm")
-file(GLOB_RECURSE MYSTICHAL_PRIVATE_HEADERS CONFIGURE_DEPENDS "source/private/*.hpp")
-file(GLOB_RECURSE MYSTICHAL_PRIVATE_SOURCES CONFIGURE_DEPENDS "source/private/*.cpp")
+if(WIN32)
+  file(GLOB_RECURSE MYSTICHAL_PRIVATE_SOURCES CONFIGURE_DEPENDS "source/private/windows/*.cpp")
+else()
+  file(GLOB_RECURSE MYSTICHAL_PRIVATE_SOURCES CONFIGURE_DEPENDS "source/private/linux/*.cpp")
+endif()
 file(GLOB_RECURSE MYSTICHAL_TEST_FILES "test/*.test.cpp")
 
 # Compilation Units
@@ -47,7 +50,6 @@ target_sources(mystic_hal
     FILE_SET HEADERS FILES
       ${MYSTICHAL_PUBLIC_HEADERS}
   PRIVATE
-    ${MYSTICHAL_PRIVATE_HEADERS}
     ${MYSTICHAL_PRIVATE_SOURCES}
 )
 
@@ -67,8 +69,14 @@ mystic_compile_options(mystic_hal)
 
 # Add MYSTIC_HAL_LOCAL_BUILD definition to the target
 if(MYSTICHAL_LOCAL_BUILD)
-  target_compile_definitions(mystic_hal PRIVATE MYSTIC_HAL_LOCAL_BUILD)
+  target_compile_definitions(mystic_hal PUBLIC MYSTIC_HAL_LOCAL_BUILD)
 endif()
+
+# Export Controls
+include(MysticExports)
+mystic_exports(mystic_hal
+  MACRO_NAME "MYSTICHAL_EXPORTS"
+)
 
 # Testing
 include(MysticTest)

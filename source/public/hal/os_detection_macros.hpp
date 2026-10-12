@@ -35,7 +35,6 @@
 #define MYSTIC_OS_WINDOWS 1
 #define MYSTIC_OS_MACOS 2
 #define MYSTIC_OS_LINUX 3
-#define MYSTIC_OS_UNIX 4  // Other Unix-like OSes (e.g., FreeBSD, OpenBSD, etc.)
 #define MYSTIC_OS_UNKNOWN 999
 
 /// OS detection
@@ -58,9 +57,6 @@
 #elif defined(__linux__)
 #  define MYSTIC_OS MYSTIC_OS_LINUX
 #  define MYSTIC_OS_NAME "Linux"
-#elif defined(__unix__) || defined(__unix)
-#  define MYSTIC_OS MYSTIC_OS_UNIX
-#  define MYSTIC_OS_NAME "UNIX"
 #else
 #  define MYSTIC_OS MYSTIC_OS_UNKNOWN
 #  define MYSTIC_OS_NAME "Unknown"
