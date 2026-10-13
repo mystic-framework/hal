@@ -14,7 +14,7 @@
 /// limitations under the License.
 /// ------------------------------------------------------------------------------------------------
 /// @file os_detection_macros.hpp
-/// @brief This file contains macros for detecting the OS being used to build the project.
+/// @brief This file contains macros for detecting the OS.
 /// @author thedevmystic (Surya) <thedevmystic@gmail>
 /// @license Apache-2.0
 ///
@@ -24,7 +24,7 @@
 /// detected OS. Use runtime counterpart when you need to detect the OS at runtime, like Windows 10
 /// vs Windows 11, etc.
 ///
-/// @sa os_detection.cppm for runtime architecture detection.
+/// @sa os_detection.cppm for runtimeOS detection.
 /// ------------------------------------------------------------------------------------------------
 
 #ifndef MYSTIC_HAL_PUBLIC_HAL_OS_DETECTION_MACROS_HPP_
