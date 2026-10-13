@@ -36,6 +36,8 @@ module;
 
 export module mystic.hal.os_detection;
 
+import mystic.hal.detail;
+
 namespace mystic::hal {
 
 /// @brief Enum representing different operating systems.
@@ -239,13 +241,43 @@ export MYSTIC_HAL_INTERNAL_EXPORT constexpr const char* ToString(LinuxVariant va
 /// @brief Converts the OperatingSystemVersion struct to a string representation.
 /// @param version The OperatingSystemVersion struct.
 /// @return A string representation of the operating system version.
-export MYSTIC_HAL_INTERNAL_EXPORT const char* ToString(
-    const OperatingSystemVersion& version) noexcept;
+export MYSTIC_HAL_INTERNAL_EXPORT constexpr const char* ToString(
+    const OperatingSystemVersion& version) noexcept {
+  thread_local char buffer[32];  // NOLINT(modernize-avoid-c-arrays)
+  char* ptr = buffer;
+  ptr = mystic::hal::detail::WriteInt(ptr, version.major);
+  *ptr++ = '.';
+  ptr = mystic::hal::detail::WriteInt(ptr, version.minor);
+  *ptr++ = '.';
+#if MYSTIC_OS == MYSTIC_OS_WINDOWS
+  // Windows uses build numbers and doesn't include patch numbers.
+  ptr = mystic::hal::detail::WriteInt(ptr, version.build);
+#else
+  // Linux uses patch numbers and doesn't include build numbers.
+  ptr = mystic::hal::detail::WriteInt(ptr, version.patch);
+#endif
+  *ptr = '\0';
+  return buffer;
+}
 
 /// @brief Converts the OperatingSystemInfo struct to a string representation.
 /// @param info The OperatingSystemInfo struct.
 /// @return A string representation of the operating system information.
-export MYSTIC_HAL_INTERNAL_EXPORT const char* ToString(const OperatingSystemInfo& info) noexcept;
+export MYSTIC_HAL_INTERNAL_EXPORT constexpr const char* ToString(
+    const OperatingSystemInfo& info) noexcept {
+  thread_local char buffer[128];  // NOLINT(modernize-avoid-c-arrays)
+  char* ptr = buffer;
+  const char* end = buffer + sizeof(buffer) - 1;  // Reserve space for null terminator
+
+  ptr = mystic::hal::detail::AppendString(ptr, end, ToString(info.os));
+  ptr = mystic::hal::detail::AppendString(ptr, end, " (");
+  ptr = mystic::hal::detail::AppendString(ptr, end, ToString(info.variant));
+  ptr = mystic::hal::detail::AppendString(ptr, end, ") Version: ");
+  ptr = mystic::hal::detail::AppendString(ptr, end, ToString(info.version));
+  *ptr = '\0';
+
+  return buffer;
+}
 
 namespace compile_time {
 

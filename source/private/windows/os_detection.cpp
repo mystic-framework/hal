@@ -25,6 +25,8 @@ module;
 
 module mystic.hal.os_detection;
 
+import mystic.hal.detail;
+
 namespace {
 
 using RtlGetVersionPtr = LONG(WINAPI*)(PRTL_OSVERSIONINFOW);
@@ -44,35 +46,6 @@ struct RTL_OSVERSIONINFOXW {
   BYTE wReserved;
 };
 // NOLINTEND(readability-identifier-naming)
-
-// Helper function to write an integer to a buffer and return the new buffer position.
-inline char* WriteInt(char* buffer, int value) noexcept {
-  if (value == 0) {
-    *buffer++ = '0';
-    return buffer;
-  }
-
-  // Versions are typically non-negative, but we handle negative values just in case.
-  if (value < 0) {
-    *buffer++ = '-';
-    value = -value;
-  }
-
-  char temp[12];  // Enough to hold int max value. NOLINT(modernize-avoid-c-arrays)
-  int pos = 0;
-
-  while (value > 0) {
-    temp[pos++] = static_cast<char>('0' + (value % 10));
-    value /= 10;
-  }
-
-  // Reverse the digits into the buffer
-  for (int i = pos - 1; i >= 0; --i) {
-    *buffer++ = temp[i];
-  }
-
-  return buffer;
-}
 
 // Helper to get RtlGetVersion function pointer
 RtlGetVersionPtr GetRtlGetVersion() {
@@ -163,54 +136,12 @@ mystic::hal::WindowsVariant DetermineWindowsVariant(const RTL_OSVERSIONINFOXW& o
 
 }  // namespace
 
-namespace mystic::hal {
-
-/// --- String Conversion Functions ---
-
-const char* ToString(const OperatingSystemVersion& version) noexcept {
-  thread_local char buffer[32];  // NOLINT(modernize-avoid-c-arrays)
-  char* ptr = buffer;
-  ptr = WriteInt(ptr, version.major);
-  *ptr++ = '.';
-  ptr = WriteInt(ptr, version.minor);
-  *ptr++ = '.';
-  ptr = WriteInt(ptr, version.build);
-  // Windows doesn't typically use patch numbers, so we'll leave it.
-  *ptr = '\0';
-  return buffer;
-}
-
-const char* ToString(const OperatingSystemInfo& info) noexcept {
-  thread_local char buffer[128];  // NOLINT(modernize-avoid-c-arrays)
-  char* ptr = buffer;
-  char* const end = buffer + sizeof(buffer) - 1;
-
-  // Helper lambda to append a string to the buffer safely
-  auto append_str = [&](const char* str) {
-    if (str == nullptr) {
-      return;
-    }
-    while (*str != '\0' && ptr < end) {
-      *ptr++ = *str++;
-    }
-  };
-
-  append_str(ToString(info.os));
-  append_str(" (");
-  append_str(ToString(info.variant));
-  append_str(") Version: ");
-  append_str(ToString(info.version));
-  *ptr = '\0';
-
-  return buffer;
-}
-
-namespace runtime {
+namespace mystic::hal::runtime {
 
 OperatingSystemVersion GetOperatingSystemVersion() noexcept {
   RTL_OSVERSIONINFOXW osvi{};
   if (!GetOSVersionInfo(osvi)) {
-    return OperatingSystemVersion{.major = 0, .minor = 0, .patch = 0, .build = 0};
+    return OperatingSystemVersion{};  // 0.0.0.0
   }
   return ParseWindowsVersion(osvi);
 }
@@ -231,6 +162,4 @@ OperatingSystemInfo GetOperatingSystemInfo() noexcept {
   return info;
 }
 
-}  // namespace runtime
-
-}  // namespace mystic::hal
+}  // namespace mystic::hal::runtime

@@ -31,14 +31,22 @@ add_library(mystic_hal ${MYSTICHAL_LIB_TYPE})
 add_library(Mystic::Hal ALIAS mystic_hal)
 
 # File Groups
+# Public Modules and Headers
 file(GLOB_RECURSE MYSTICHAL_PUBLIC_MODULES  CONFIGURE_DEPENDS "source/public/*.cppm")
 file(GLOB_RECURSE MYSTICHAL_PUBLIC_HEADERS  CONFIGURE_DEPENDS "source/public/*.hpp")
-file(GLOB_RECURSE MYSTICHAL_PRIVATE_MODULES CONFIGURE_DEPENDS "source/private/*.cppm")
+
+# Common Sources
+file(GLOB_RECURSE MYSTICHAL_PRIVATE_SOURCES CONFIGURE_DEPENDS "source/private/*.cpp")
+list(FILTER MYSTICHAL_PRIVATE_SOURCES EXCLUDE REGEX "(^|/)(windows|linux)/")
+
+# Platform Specific Sources
 if(WIN32)
-  file(GLOB_RECURSE MYSTICHAL_PRIVATE_SOURCES CONFIGURE_DEPENDS "source/private/windows/*.cpp")
+  file(GLOB_RECURSE MYSTICHAL_PRIVATE_PLATFORM_SOURCES CONFIGURE_DEPENDS "source/private/windows/*.cpp")
 else()
-  file(GLOB_RECURSE MYSTICHAL_PRIVATE_SOURCES CONFIGURE_DEPENDS "source/private/linux/*.cpp")
+  file(GLOB_RECURSE MYSTICHAL_PRIVATE_PLATFORM_SOURCES CONFIGURE_DEPENDS "source/private/linux/*.cpp")
 endif()
+
+# Test Sources
 file(GLOB_RECURSE MYSTICHAL_TEST_FILES "test/*.test.cpp")
 
 # Compilation Units
@@ -46,11 +54,11 @@ target_sources(mystic_hal
   PUBLIC
     FILE_SET CXX_MODULES FILES
       ${MYSTICHAL_PUBLIC_MODULES}
-      ${MYSTICHAL_PRIVATE_MODULES}
     FILE_SET HEADERS FILES
       ${MYSTICHAL_PUBLIC_HEADERS}
   PRIVATE
     ${MYSTICHAL_PRIVATE_SOURCES}
+    ${MYSTICHAL_PRIVATE_PLATFORM_SOURCES}
 )
 
 # Include Directories
