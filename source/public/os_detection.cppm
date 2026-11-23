@@ -33,6 +33,7 @@ module;
 
 #include "hal/hal_export_marker.hpp"
 #include "hal/os_detection_macros.hpp"
+#include "hal/platform_ints.hpp"
 
 export module mystic.hal.os_detection;
 
@@ -41,33 +42,33 @@ import mystic.hal.detail;
 namespace mystic::hal {
 
 /// @brief Enum representing different operating systems.
-export enum class OperatingSystem : int {  // NOLINT(performance-enum-size)
-  kWindows = 0,                            ///< Represents the Windows operating system.
-  kMacOS,                                  ///< Represents the macOS operating system.
-  kLinux,                                  ///< Represents the Linux operating system
-  kUnknown,                                ///< Represents an unknown operating system.
+export enum class OperatingSystem : MYSTIC_INT8 {
+  kWindows = 0,  ///< Represents the Windows operating system.
+  kMacOS,        ///< Represents the macOS operating system.
+  kLinux,        ///< Represents the Linux operating system
+  kUnknown,      ///< Represents an unknown operating system.
 };
 
 /// @brief Enum representing different variants of Windows OS.
-export enum class WindowsVariant : int {  // NOLINT(performance-enum-size)
-  kUnknown = 0,                           ///< Represents an unknown version of Windows.
-  kWindows7,                              ///< Represents Windows 7.
-  kWindows8,                              ///< Represents Windows 8.
-  kWindows81,                             ///< Represents Windows 8.1.
-  kWindows10,                             ///< Represents Windows 10.
-  kWindows11,                             ///< Represents Windows 11.
-  kWindowsServer2008,                     ///< Represents Windows Server 2008.
-  kWindowsServer2012,                     ///< Represents Windows Server 2012.
-  kWindowsServer2016,                     ///< Represents Windows Server 2016.
-  kWindowsServer2019,                     ///< Represents Windows Server 2019.
-  kWindowsServer2022,                     ///< Represents Windows Server 2022.
-  kWindowsServer2025,                     ///< Represents Windows Server 2025.
-  kOther,  ///< Represents other versions of Windows not explicitly listed.
+export enum class WindowsVariant : MYSTIC_INT8 {
+  kUnknown = 0,        ///< Represents an unknown version of Windows.
+  kWindows7,           ///< Represents Windows 7.
+  kWindows8,           ///< Represents Windows 8.
+  kWindows81,          ///< Represents Windows 8.1.
+  kWindows10,          ///< Represents Windows 10.
+  kWindows11,          ///< Represents Windows 11.
+  kWindowsServer2008,  ///< Represents Windows Server 2008.
+  kWindowsServer2012,  ///< Represents Windows Server 2012.
+  kWindowsServer2016,  ///< Represents Windows Server 2016.
+  kWindowsServer2019,  ///< Represents Windows Server 2019.
+  kWindowsServer2022,  ///< Represents Windows Server 2022.
+  kWindowsServer2025,  ///< Represents Windows Server 2025.
+  kOther,              ///< Represents other versions of Windows not explicitly listed.
 };
 
 /// @brief Enum representing different variants of Linux OS.
-export enum class LinuxVariant : int {  // NOLINT(performance-enum-size)
-  kUnknown = 0,                         ///< Represents an unknown version of Linux.
+export enum class LinuxVariant : MYSTIC_INT8 {
+  kUnknown = 0,  ///< Represents an unknown version of Linux.
   // Debian Family
   kDebian,  ///< Represents Debian Linux.
   kUbuntu,  ///< Represents Ubuntu Linux.

@@ -33,6 +33,7 @@ module;
 
 #include "hal/compiler_detection_macros.hpp"
 #include "hal/hal_export_marker.hpp"
+#include "hal/platform_ints.hpp"
 
 export module mystic.hal.compiler_detection;
 
@@ -41,12 +42,12 @@ import mystic.hal.detail;
 namespace mystic::hal {
 
 // @brief Enum representing different compilers.
-export enum class Compiler : int {  // NOLINT(performance-enum-size)
-  kUnknown = 0,                     ///< Represents the Microsoft Visual C++ compiler.
-  kMsvc,                            ///< Represents the Microsoft Visual C++ compiler.
-  kClang,                           ///< Represents the Clang compiler.
-  kGcc,                             ///< Represents the GNU Compiler Collection.
-  kIntel,                           ///< Represents the Intel compiler.
+export enum class Compiler : MYSTIC_INT8 {
+  kUnknown = 0,  ///< Represents the Microsoft Visual C++ compiler.
+  kMsvc,         ///< Represents the Microsoft Visual C++ compiler.
+  kClang,        ///< Represents the Clang compiler.
+  kGcc,          ///< Represents the GNU Compiler Collection.
+  kIntel,        ///< Represents the Intel compiler.
 };
 
 /// @brief Struct to represent the compiler version information.
