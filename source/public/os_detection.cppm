@@ -245,16 +245,16 @@ export MYSTIC_HAL_INTERNAL_EXPORT constexpr const char* ToString(
     const OperatingSystemVersion& version) noexcept {
   thread_local char buffer[32];  // NOLINT(modernize-avoid-c-arrays)
   char* ptr = buffer;
-  ptr = mystic::hal::detail::WriteInt(ptr, version.major);
+  ptr = detail::WriteInt(ptr, version.major);
   *ptr++ = '.';
-  ptr = mystic::hal::detail::WriteInt(ptr, version.minor);
+  ptr = detail::WriteInt(ptr, version.minor);
   *ptr++ = '.';
 #if MYSTIC_OS == MYSTIC_OS_WINDOWS
   // Windows uses build numbers and doesn't include patch numbers.
-  ptr = mystic::hal::detail::WriteInt(ptr, version.build);
+  ptr = detail::WriteInt(ptr, version.build);
 #else
   // Linux uses patch numbers and doesn't include build numbers.
-  ptr = mystic::hal::detail::WriteInt(ptr, version.patch);
+  ptr = detail::WriteInt(ptr, version.patch);
 #endif
   *ptr = '\0';
   return buffer;
@@ -269,11 +269,11 @@ export MYSTIC_HAL_INTERNAL_EXPORT constexpr const char* ToString(
   char* ptr = buffer;
   const char* end = buffer + sizeof(buffer) - 1;  // Reserve space for null terminator
 
-  ptr = mystic::hal::detail::AppendString(ptr, end, ToString(info.os));
-  ptr = mystic::hal::detail::AppendString(ptr, end, " (");
-  ptr = mystic::hal::detail::AppendString(ptr, end, ToString(info.variant));
-  ptr = mystic::hal::detail::AppendString(ptr, end, ") Version: ");
-  ptr = mystic::hal::detail::AppendString(ptr, end, ToString(info.version));
+  ptr = detail::AppendString(ptr, end, ToString(info.os));
+  ptr = detail::AppendString(ptr, end, " (");
+  ptr = detail::AppendString(ptr, end, ToString(info.variant));
+  ptr = detail::AppendString(ptr, end, ") Version: ");
+  ptr = detail::AppendString(ptr, end, ToString(info.version));
   *ptr = '\0';
 
   return buffer;
