@@ -1,9 +1,22 @@
 {
+  "$schema": "https://mystic-framework.github.io/schema/project.json",
   "name": "MysticHal",
   "version": "1.0.0",
   "description": "A lightweight, high-performance, and cross-platform C++ Hardware Abstraction Layer (HAL) library for Mystic Framework.",
   "homepage": "https://mystic-framework.github.io/docs/modules/hal",
-  "languages": ["CXX"],
-  "cxx_standard": 23,
-  "license": "Apache-2.0"
+  "languages": [
+    "CXX"
+  ],
+  "cxx_standard": "23",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "third_party": [
+      {
+        "name": "Catch2",
+        "version": "3.16.1",
+        "git_url": "https://github.com/catchorg/Catch2.git",
+        "git_tag": "v3.16.1"
+      }
+    ]
+  }
 }

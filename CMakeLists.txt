@@ -16,15 +16,15 @@ project(${MYSTICHAL_PROJECT_ARGUMENTS})
 # Setup Options
 include(MysticSetupOptions)
 mystic_setup_options()
-mystic_setup_third_party_options("Catch2")
+mystic_setup_third_party_options()
 
 # Since HAL is quite platform dependent, we will provide an option to specify that it's
 # being built locally, this disables some tests which are only runnable in CI/CD.
 option(MYSTICHAL_LOCAL_BUILD "HAL is being built locally." OFF)
 
-# Include Third Party
-include(MysticIncludeThirdParty)
-mystic_include_third_party()
+# Setup Dependencies
+include(MysticDependency)
+mystic_generate_dependencies()
 
 # Target
 add_library(mystic_hal ${MYSTICHAL_LIB_TYPE})

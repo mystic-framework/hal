@@ -41,8 +41,8 @@ function(mystic_import_cmake)
 
   # Set the repository URL and tag for Mystic CMake
   set(REPO_URL "https://github.com/mystic-framework/cmake.git")
-  set(REPO_TAG "main") # Current latest release tag (or "main")
-  set(SRC_DIR "${CMAKE_BINARY_DIR}/_deps/mystic_cmake-src")
+  set(REPO_TAG "v1.3.0") # Current latest release tag (or "main")
+  set(SRC_DIR "${CMAKE_BINARY_DIR}/_deps/mysticcmake-src")
 
   find_package(Git REQUIRED QUIET)
 
