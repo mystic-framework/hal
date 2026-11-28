@@ -42,7 +42,7 @@ inline mystic::hal::OperatingSystemVersion ParseVersionString(const char* versio
   const char* ptr = version_str;
 
   // Helper lambda to parse an integer from the string and advance the pointer.
-  auto const parse_int = [](const char*& ptr) -> int {
+  const auto parse_int = [](const char*& ptr) -> int {
     int value = 0;
     // Parse the digits
     while (*ptr >= '0' && *ptr <= '9') {
@@ -71,13 +71,13 @@ inline bool GetLinuxId(char* out, size_t out_size) noexcept {
   }
   out[0] = '\0';
 
-  int const fd = ::open("/etc/os-release", O_RDONLY);
+  const int fd = ::open("/etc/os-release", O_RDONLY);
   if (fd < 0) {
     return false;  // Failed to open fd
   }
 
   char buffer[4096];  // 4KB NOLINT(modernize-avoid-c-arrays)
-  ssize_t const bytes_read = ::read(fd, buffer, sizeof(buffer) - 1);
+  const ssize_t bytes_read = ::read(fd, buffer, sizeof(buffer) - 1);
   ::close(fd);
 
   if (bytes_read <= 0) {
@@ -86,7 +86,7 @@ inline bool GetLinuxId(char* out, size_t out_size) noexcept {
   buffer[bytes_read] = '\0';
 
   char* saveptr = nullptr;
-  char const* line = ::strtok_r(buffer, "\n", &saveptr);
+  const char* line = ::strtok_r(buffer, "\n", &saveptr);
   while (line != nullptr) {
     if (mystic::hal::detail::StartsWith(line, "ID=")) {
       const char* val = line + 3;  // Skip "ID="
@@ -177,7 +177,7 @@ OperatingSystemVariant GetOperatingSystemVariant() noexcept {
   if (!GetLinuxId(id, sizeof(id))) {
     return static_cast<OperatingSystemVariant>(LinuxVariant::kUnknown);
   }
-  LinuxVariant const linux_variant = ParseLinuxId(id);
+  const LinuxVariant linux_variant = ParseLinuxId(id);
   return static_cast<OperatingSystemVariant>(linux_variant);
 }
 
